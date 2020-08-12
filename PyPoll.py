@@ -16,6 +16,15 @@
 import os
 import csv
 
+#Initialize variable for votes
+total_votes = 0
+
+#Candidate options
+candidate_options = []
+
+#Dictionary for candidate votes
+candidate_votes = {}
+
 #Assigning a variable for the file to load and the path
 file_to_load = os.path.join('Resources', 'election_results.csv')
 
@@ -24,11 +33,33 @@ file_to_save = os.path.join('analysis', 'election_analysis.txt')
 
 #Open the election results file and read
 with open(file_to_load) as election_data:
-
-#To Do: performa analysis
     file_reader = csv.reader(election_data)
+
+#Read the header row
     headers = next(file_reader)
-    print(headers)
+    
+#Print each row in the CSV
+    for row in file_reader:
+        total_votes += 1
+        
+
+        #Print the candidate name for each row
+        candidate_name = row[2]
+
+        if candidate_name not in candidate_options:
+            #Identify the distinct candidates
+            candidate_options.append(candidate_name)
+            #Begin tracking votes for each candidate
+            candidate_votes[candidate_name] = 0
+        #Increment the votes for each candidate
+        candidate_votes[candidate_name] += 1
+    
+    #Find the percantage of votes
+    for candidate_name in candidate_votes:
+        votes = candidate_votes[candidate_name]
+        vote_percantage = float(votes)/float(total_votes) * 100
+            
+print(f'{candidate_name}: has {vote_percantage:.2f}% of the vote')
 
 
 
