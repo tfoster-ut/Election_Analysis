@@ -58,7 +58,8 @@ with open(file_to_load) as election_data:
     for candidate_name in candidate_votes:
         votes = candidate_votes[candidate_name]
         vote_percantage = float(votes)/float(total_votes) * 100
-            
+        
+### Currently this is only printing one result... need to figure out why only one result is returning
 print(f'{candidate_name}: has {vote_percantage:.2f}% of the vote')
 
 
