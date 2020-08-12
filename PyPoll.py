@@ -12,10 +12,22 @@
 # 5) The winning candidate by total popular vote
 
 
-import datetime
+#Create imports
+import os
+import csv
 
-now = datetime.datetime.now()
+#Assigning a variable for the file to load and the path
+file_to_load = os.path.join('Resources', 'election_results.csv')
 
-print(f'The current date and time is {now:}')
+#Assigning a variable to save file
+file_to_save = os.path.join('analysis', 'election_analysis.txt')
+
+#Open the election results file and read
+with open(file_to_load) as election_data:
+
+#To Do: performa analysis
+with open(file_to_load) as election_data:
+
+
 
 
