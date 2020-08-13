@@ -61,6 +61,15 @@ with open(file_to_load) as election_data:
             candidate_votes[candidate_name] = 0
         #Increment the votes for each candidate
         candidate_votes[candidate_name] += 1
+
+with open(file_to_save, 'w') as txt_file:
+    election_results = (
+        f'\nElection Results\n'
+        f'-------------------------\n'
+        f'Total Votes: {total_votes:,}\n'
+        f'-------------------------\n')
+    print(election_results, end='')
+    txt_file.write(election_results)
     
     #Find the percentage of votes
     for candidate_name in candidate_votes:
@@ -68,7 +77,7 @@ with open(file_to_load) as election_data:
         votes = candidate_votes[candidate_name]
         #Calculate percentage of votes 
         vote_percentage = float(votes)/float(total_votes) * 100
-        
+        #print(f'{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n')
 
         #Determining the winner
         if (votes > winning_count) and (vote_percentage > winning_percentage):
@@ -77,19 +86,12 @@ with open(file_to_load) as election_data:
             winning_candidate = candidate_name
 
     winning_candidate_summary = (
-    f'------------------\n'
+    f'-------------------------\n'
     f'Winner: {winning_candidate}\n'
     f'Winning Vote Count: {winning_count:,}\n'
     f'Winning Percentage: {winning_percentage:.1f}\n'
-    f'------------------\n')
+    f'-------------------------\n')
 
-#print(candidate_votes)
-
-### Currently this is only printing one result... need to figure out why only one result is returning
-#print(f'{candidate_name}: has {vote_percentage:.1f}% of the vote')
-
-#Print out winning candidate
-print(f'{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n')
-
-print(winning_candidate_summary)
+#Print out winning summary
+#print(winning_candidate_summary)
      
