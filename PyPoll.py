@@ -1,17 +1,4 @@
 
-# The data that needs to be collected
-
-# 1) Total votes cast
-
-# 2) Comprehensive list of candidates that received votes
-
-# 3) Percantage of votes that each candidate won
-
-# 4) Total number of votes each candidate won
-
-# 5) The winning candidate by total popular vote
-
-
 #Create imports
 import os
 import csv
@@ -54,6 +41,7 @@ with open(file_to_load) as election_data:
         #Skip header row
         candidate_name = row[2]
 
+    #Iterate through candidates adding up to total votes
         if candidate_name not in candidate_options:
             #Identify the distinct candidates
             candidate_options.append(candidate_name)
@@ -62,6 +50,7 @@ with open(file_to_load) as election_data:
         #Increment the votes for each candidate
         candidate_votes[candidate_name] += 1
 
+#Begin writing to output file
 with open(file_to_save, 'w') as txt_file:
     election_results = (
         f'\nElection Results\n'
@@ -70,28 +59,32 @@ with open(file_to_save, 'w') as txt_file:
         f'-------------------------\n')
     print(election_results, end='')
     txt_file.write(election_results)
-    
+
     #Find the percentage of votes
     for candidate_name in candidate_votes:
         #Count each vote for the candidates
         votes = candidate_votes[candidate_name]
         #Calculate percentage of votes 
         vote_percentage = float(votes)/float(total_votes) * 100
-        #print(f'{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n')
+        
+        #Adding candidate results to terminal and output file
+        candidate_results = (f'{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n')
+        print(candidate_results)
+        txt_file.write(candidate_results)
 
         #Determining the winner
         if (votes > winning_count) and (vote_percentage > winning_percentage):
             winning_count = votes
             winning_percentage = vote_percentage
             winning_candidate = candidate_name
-
+    
+    #Winner Summary
     winning_candidate_summary = (
-    f'-------------------------\n'
-    f'Winner: {winning_candidate}\n'
-    f'Winning Vote Count: {winning_count:,}\n'
-    f'Winning Percentage: {winning_percentage:.1f}\n'
-    f'-------------------------\n')
-
-#Print out winning summary
-#print(winning_candidate_summary)
-     
+        f'-------------------------\n'
+        f'Winner: {winning_candidate}\n'
+        f'Winning Vote Count: {winning_count:,}\n'
+        f'Winning Percentage: {winning_percentage:.1f}\n'
+        f'-------------------------\n')
+    print(winning_candidate_summary, end='')
+    #Write winning summary to txt output file
+    txt_file.write(winning_candidate_summary)
