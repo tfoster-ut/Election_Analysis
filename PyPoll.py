@@ -26,19 +26,19 @@ candidate_options = []
 candidate_votes = {}
 
 #Initialize string for winning candidate
-winning_candidate = []
+winning_candidate = ''
 
 #Initialize winning count to 0
 winning_count = 0
 
 #Winning % initialize to 0
-winning_perc = 0
+winning_percentage = 0
 
 #Assigning a variable for the file to load and the path
-file_to_load = os.path.join('Resources', 'election_results.csv')
+file_to_load = os.path.join('election_results.csv')
 
 #Assigning a variable to save file
-file_to_save = os.path.join('analysis', 'election_analysis.txt')
+file_to_save = os.path.join('election_analysis.txt')
 
 #Open the election results file and read
 with open(file_to_load) as election_data:
@@ -68,22 +68,28 @@ with open(file_to_load) as election_data:
         votes = candidate_votes[candidate_name]
         #Calculate percentage of votes 
         vote_percentage = float(votes)/float(total_votes) * 100
+        
 
         #Determining the winner
-        if (votes > winning_count) and (vote_percentage > winning_perc):
+        if (votes > winning_count) and (vote_percentage > winning_percentage):
             winning_count = votes
-            winning_perc = vote_percentage
-            winning_count = candidate_name
+            winning_percentage = vote_percentage
+            winning_candidate = candidate_name
+
+    winning_candidate_summary = (
+    f'------------------\n'
+    f'Winner: {winning_candidate}\n'
+    f'Winning Vote Count: {winning_count:,}\n'
+    f'Winning Percentage: {winning_percentage:.1f}\n'
+    f'------------------\n')
+
+#print(candidate_votes)
 
 ### Currently this is only printing one result... need to figure out why only one result is returning
-print(f'{candidate_name}: has {vote_percentage:.1f}% of the vote')
+#print(f'{candidate_name}: has {vote_percentage:.1f}% of the vote')
 
 #Print out winning candidate
-print(f'{candidate_name} is the winning candidate with {votes} and {vote_percantage} of the vote.')
+print(f'{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n')
+
+print(winning_candidate_summary)
      
-
-
-
-
-
-
