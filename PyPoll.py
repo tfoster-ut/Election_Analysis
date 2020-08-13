@@ -25,6 +25,15 @@ candidate_options = []
 #Dictionary for candidate votes
 candidate_votes = {}
 
+#Initialize string for winning candidate
+winning_candidate = []
+
+#Initialize winning count to 0
+winning_count = 0
+
+#Winning % initialize to 0
+winning_perc = 0
+
 #Assigning a variable for the file to load and the path
 file_to_load = os.path.join('Resources', 'election_results.csv')
 
@@ -41,9 +50,8 @@ with open(file_to_load) as election_data:
 #Print each row in the CSV
     for row in file_reader:
         total_votes += 1
-        
 
-        #Print the candidate name for each row
+        #Skip header row
         candidate_name = row[2]
 
         if candidate_name not in candidate_options:
@@ -54,13 +62,26 @@ with open(file_to_load) as election_data:
         #Increment the votes for each candidate
         candidate_votes[candidate_name] += 1
     
-    #Find the percantage of votes
+    #Find the percentage of votes
     for candidate_name in candidate_votes:
+        #Count each vote for the candidates
         votes = candidate_votes[candidate_name]
-        vote_percantage = float(votes)/float(total_votes) * 100
-        
+        #Calculate percentage of votes 
+        vote_percentage = float(votes)/float(total_votes) * 100
+
+        #Determining the winner
+        if (votes > winning_count) and (vote_percentage > winning_perc):
+            winning_count = votes
+            winning_perc = vote_percentage
+            winning_count = candidate_name
+
 ### Currently this is only printing one result... need to figure out why only one result is returning
-print(f'{candidate_name}: has {vote_percantage:.2f}% of the vote')
+print(f'{candidate_name}: has {vote_percentage:.1f}% of the vote')
+
+#Print out winning candidate
+print(f'{candidate_name} is the winning candidate with {votes} and {vote_percantage} of the vote.')
+     
+
 
 
 
